@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg">
+	<div class="keys">
+		<div data-key="65" class="key  ">
+			<kbd>A</kbd>
+			<span class="sound">Clap</span>
+		</div>
+		<div data-key="83" class="key">
+			<kbd>S</kbd>
+			<span class="sound">Clave</span>
+		</div>
+		<div data-key="68" class="key">
+			<kbd>D</kbd>
+			<span class="sound">CHat</span>
+		</div>
+		<div data-key="70" class="key">
+			<kbd>F</kbd>
+			<span class="sound">Congas</span>
+		</div>
+		<div data-key="71" class="key">
+			<kbd>G</kbd>
+			<span class="sound">Cowbell</span>
+		</div>
+		<div data-key="72" class="key">
+			<kbd>H</kbd>
+			<span class="sound">Cymbal</span>
+		</div>
+		<div data-key="74" class="key">
+			<kbd>J</kbd>
+			<span class="sound">Marcas</span>
+		</div>
+		<div data-key="75" class="key">
+			<kbd>K</kbd>
+			<span class="sound">Snare</span>
+		</div>
+		<div data-key="76" class="key">
+			<kbd>L</kbd>
+			<span class="sound">OHat</span>
+		</div>
+		
+	</div>
+</div>
+
+<audio data-key="65" src="sounds/E808_CP-05.wav" type="audio/x-wav"></audio>
+<audio data-key="83" src="sounds/E808_CL-05.wav"></audio>
+<audio data-key="68" src="sounds/E808_CH-07.wav"></audio>
+<audio data-key="70" src="sounds/E808_HC-04.wav"></audio>
+<audio data-key="71" src="sounds/E808_CB-05.wav"></audio>
+<audio data-key="72" src="sounds/E808_CY-05.wav"></audio>
+<audio data-key="74" src="sounds/E808_MA-05.wav"></audio>
+<audio data-key="75" src="sounds/E808_SD-06.wav"></audio>
+<audio data-key="76" src="sounds/E808_OH-06.wav"></audio>
+
+
+	<script>
+				function playSound(e){
+			const audio	= document.querySelector(`audio[data-key="${e.keyCode}"]`);
+			const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+			if(!audio) return;
+			audio.currentTime = 0; // rewind to the start
+			audio.play();
+			key.classList.add('playing');
+		}
+		function removeTransition(e){
+			if(e.propertyName != 'transform') return ; //skip it itf its not a transform
+			this.classList.remove('playing');
+		}
+		
+
+		const keys= document.querySelectorAll('.key');
+		keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+		window.addEventListener('keydown',playSound);
+
+	</script>
+	
+</body>
+</html>
